@@ -63,7 +63,6 @@ namespace PeopleDatabase.Forms
             txtBoxName.Text = "";
             txtBoxMiddleName.Text = "";
             txtBoxSurname.Text = "";
-            txtBoxAge.Text = "";
             txtBoxPhoneNumber.Text = "";
             txtBoxWeight.Text = "";
             txtBoxHeight.Text = "";
@@ -76,8 +75,8 @@ namespace PeopleDatabase.Forms
             connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
             con.ConnectionString = connectionString;
             con.Open();
-            string query = "INSERT INTO people (Id, Name, MiddleName,LastName,Age,PhoneNumber,Address,Photo,Weight,Height)";
-            query += " VALUES (@Id, @Name, @MiddleName, @LastName, @Age, @PhoneNumber, @Address, @Photo, @Weight, @Height)";
+            string query = "INSERT INTO people (Id, Name, MiddleName,LastName,Birthday,PhoneNumber,Address,Photo,Weight,Height)";
+            query += " VALUES (@Id, @Name, @MiddleName, @LastName, @Birthday, @PhoneNumber, @Address, @Photo, @Weight, @Height)";
 
             SqlCommand cmd = new SqlCommand(query, con);
 
@@ -88,7 +87,7 @@ namespace PeopleDatabase.Forms
                 people.Name = txtBoxName.Text;
                 people.MiddleName = txtBoxMiddleName.Text;
                 people.LastName = txtBoxSurname.Text;
-                people.Age = Convert.ToInt32(txtBoxAge.Text);
+                people.Birthday = dtpBirthday.Value;
                 people.PhoneNumber = txtBoxPhoneNumber.Text;
                 people.Address = txtBoxAddress.Text;
                 people.Weight = Convert.ToInt32(txtBoxWeight.Text);
@@ -105,14 +104,14 @@ namespace PeopleDatabase.Forms
                 cmd.Parameters.AddWithValue("Name", people.Name);
                 cmd.Parameters.AddWithValue("MiddleName", people.MiddleName);
                 cmd.Parameters.AddWithValue("LastName", people.LastName);
-                cmd.Parameters.AddWithValue("Age", people.Age);
+                cmd.Parameters.AddWithValue("Birthday", people.Birthday);
                 cmd.Parameters.AddWithValue("PhoneNumber", people.PhoneNumber);
                 cmd.Parameters.AddWithValue("Address", people.Address);
                 cmd.Parameters.AddWithValue("Photo", people.Photo);
                 cmd.Parameters.AddWithValue("Weight", people.Weight);
                 cmd.Parameters.AddWithValue("Height", people.Height);
 
-                DialogResult res = MessageBox.Show("Id: " + people.Id + "\nName: " + people.Name + "\nMiddleName: " + people.MiddleName + "\nLastName: " + people.LastName + "\nAge: " + people.Age + "\nPhoneNumber: " + people.PhoneNumber + "\nAddress: " + people.Address + "\nWeight: " + people.Weight + "\nHeight: " + people.Height + "\nImage: " + people.Photo + "\n\nEklemek istediğinize emin misiniz?", "Emin misiniz?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                DialogResult res = MessageBox.Show("Id: " + people.Id + "\nName: " + people.Name + "\nMiddleName: " + people.MiddleName + "\nLastName: " + people.LastName + "\nAge: " + people.Birthday + "\nPhoneNumber: " + people.PhoneNumber + "\nAddress: " + people.Address + "\nWeight: " + people.Weight + "\nHeight: " + people.Height + "\nImage: " + people.Photo + "\n\nEklemek istediğinize emin misiniz?", "Emin misiniz?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
 
                 if(res == DialogResult.OK)
                     cmd.ExecuteNonQuery();
