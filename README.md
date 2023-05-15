@@ -1,14 +1,18 @@
 # PeopleDatabase
 
 İnsanların: 
-  Id,
-  İsim,
-  Göbek adı,
-  Soyadı,
-  Yaşı,
-  Telefon Numarası,
-  Kilosu,
-  Boyu
+{
+  [
+    Id,
+    İsim,
+    Göbek adı,
+    Soyadı,
+    Yaşı,
+    Telefon Numarası,
+    Kilosu,
+    Boyu
+  ]
+}
   
 bilgilerini MSSQL ile tutan bir forms uygulaması.
 
