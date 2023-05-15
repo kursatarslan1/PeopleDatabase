@@ -1,5 +1,17 @@
 # PeopleDatabase
 
+İnsanların: 
+  Id,
+  İsim,
+  Göbek adı,
+  Soyadı,
+  Yaşı,
+  Telefon Numarası,
+  Kilosu,
+  Boyu
+  
+bilgilerini MSSQL ile tutan bir forms uygulaması.
+
 ![image](https://github.com/kursatarslan1/PeopleDatabase/assets/79106716/0a189e0e-aa8c-4dd4-9391-3c3727f9fc53)
 
 
