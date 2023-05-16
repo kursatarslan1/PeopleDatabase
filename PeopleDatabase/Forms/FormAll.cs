@@ -22,6 +22,9 @@ namespace PeopleDatabase.Forms
 
         private void FormAll_Load(object sender, EventArgs e)
         {
+            // TODO: Bu kod satırı 'peopleDataSet3.people' tablosuna veri yükler. Bunu gerektiği şekilde taşıyabilir, veya kaldırabilirsiniz.
+            this.peopleTableAdapter.Fill(this.peopleDataSet3.people);
+            // TODO: Bu kod satırı 'peopleDataSet.people' tablosuna veri yükler. Bunu gerektiği şekilde taşıyabilir, veya kaldırabilirsiniz.
             connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
             con.ConnectionString = connectionString;
             LoadData();
