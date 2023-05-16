@@ -45,9 +45,10 @@ namespace PeopleDatabase.Forms
                         pbGetImage.Image = myThumbnail;
 
                     }
+                    
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error : " + ex.Message);
+                       MessageBox.Show("Error : " + ex.Message);
                     }
                 }
             }
@@ -116,12 +117,18 @@ namespace PeopleDatabase.Forms
                 if(res == DialogResult.OK)
                     cmd.ExecuteNonQuery();
                 
+                con.Close();
                 
             }
             catch (Exception ex)
             {
-                MessageBox.Show("" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                con.Close();
+                string error = ex.Message;
+                if (error.Contains("PRIMARY KEY"))
+                    MessageBox.Show("Already Exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                else
+                {
+                    MessageBox.Show("" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             con.Close();  

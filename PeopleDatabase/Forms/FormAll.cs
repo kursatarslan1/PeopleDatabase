@@ -22,13 +22,12 @@ namespace PeopleDatabase.Forms
 
         private void FormAll_Load(object sender, EventArgs e)
         {
-            // TODO: Bu kod satırı 'peopleDataSet3.people' tablosuna veri yükler. Bunu gerektiği şekilde taşıyabilir, veya kaldırabilirsiniz.
-            this.peopleTableAdapter.Fill(this.peopleDataSet3.people);
-            // TODO: Bu kod satırı 'peopleDataSet.people' tablosuna veri yükler. Bunu gerektiği şekilde taşıyabilir, veya kaldırabilirsiniz.
             connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
             con.ConnectionString = connectionString;
             LoadData();
             dataGridView1.RowTemplate.Height = 235;
+            dataGridView1.DefaultCellStyle.SelectionBackColor = dataGridView1.DefaultCellStyle.BackColor;
+            dataGridView1.DefaultCellStyle.SelectionForeColor = dataGridView1.DefaultCellStyle.ForeColor;
         }
 
         public void LoadData()
@@ -44,6 +43,12 @@ namespace PeopleDatabase.Forms
                 }
                 con.Close();
             }
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Forms.FormInfo frm = new Forms.FormInfo(dataGridView1.SelectedCells[0].Value.ToString());
+            frm.Show();
         }
     }
 }
