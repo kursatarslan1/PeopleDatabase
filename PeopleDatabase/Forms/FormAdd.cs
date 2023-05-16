@@ -18,6 +18,7 @@ namespace PeopleDatabase.Forms
         string connectionString;
         SqlConnection con = new SqlConnection();
         string filepath = "";
+        bool checkPhoneNumber;
         public FormAdd()
         {
             InitializeComponent();
@@ -164,6 +165,28 @@ namespace PeopleDatabase.Forms
         private void pbGetImage_MouseLeave(object sender, EventArgs e)
         {
             Cursor = Cursors.Default;
+        }
+
+        private void txtBoxPhoneNumber_TextChanged(object sender, EventArgs e)
+        {   
+            if(txtBoxPhoneNumber.Text.Length == 1)
+            {
+                checkPhoneNumber = true;
+            }
+
+            if(checkPhoneNumber == true)
+            {
+                string s = txtBoxPhoneNumber.Text;
+                if (s.Length == 10)
+                {
+                    double sAsD = double.Parse(s);
+                    txtBoxPhoneNumber.Text = string.Format("{0:+90 (###) ### ## ##}", sAsD).ToString();
+                    checkPhoneNumber = false;
+                }
+                if (txtBoxPhoneNumber.Text.Length > 1)
+                    txtBoxPhoneNumber.SelectionStart = txtBoxPhoneNumber.Text.Length;
+                txtBoxPhoneNumber.SelectionLength = 0;
+            }
         }
     }
 }
