@@ -230,7 +230,7 @@
             this.btnCleanFields.Name = "btnCleanFields";
             this.btnCleanFields.Size = new System.Drawing.Size(127, 52);
             this.btnCleanFields.TabIndex = 20;
-            this.btnCleanFields.Text = "Clean Fields";
+            this.btnCleanFields.Text = "Clear Fields";
             this.btnCleanFields.UseVisualStyleBackColor = true;
             this.btnCleanFields.Click += new System.EventHandler(this.btnCleanFields_Click);
             // 
