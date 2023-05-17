@@ -50,6 +50,9 @@ Bilgileri update ve delete etme operasyonlarına erişilen form:
 
 ![image](https://github.com/kursatarslan1/PeopleDatabase/assets/79106716/40d3250d-75aa-4135-95df-c30994be9e55)
 
+Update butonuna basıldığında:
+
+![image](https://github.com/kursatarslan1/PeopleDatabase/assets/79106716/2f792cb1-ccde-4a64-a0d9-1b7b728c7c70)
 
 
 
