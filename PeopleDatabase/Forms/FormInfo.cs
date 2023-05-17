@@ -15,10 +15,9 @@ namespace PeopleDatabase.Forms
 {
     public partial class FormInfo : Form
     {
-        SqlConnection con = new SqlConnection();
-        string connectionString;
-        People p = new People();
-        string value;
+        readonly People p = new People();
+        readonly SqlHelper sql = new SqlHelper();
+        readonly string value;
         public FormInfo()
         {
             InitializeComponent();
@@ -39,27 +38,8 @@ namespace PeopleDatabase.Forms
         public void GetValues()
         {
             Id = value;
-            connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
-            con.ConnectionString = connectionString;
-            con.Open();
-
-            SqlCommand sqlCommand = new SqlCommand("SELECT * FROM people WHERE Id="+ Id, con);
-            SqlDataReader reader = sqlCommand.ExecuteReader();
-            while (reader.Read())
-            {
-                p.Id = Convert.ToDecimal(reader["Id"]);
-                p.Name = Convert.ToString(reader["Name"]);
-                p.MiddleName = Convert.ToString(reader["MiddleName"]);
-                p.LastName = Convert.ToString(reader["LastName"]);
-                p.Birthday = Convert.ToDateTime(reader["Birthday"]);
-                p.Address = Convert.ToString(reader["Address"]);
-                p.Photo = (byte[])reader["Photo"];
-                p.PhoneNumber = Convert.ToString(reader["PhoneNumber"]);
-                p.Weight = Convert.ToInt32(reader["Weight"]);
-                p.Height = Convert.ToInt32(reader["Height"]);
-            }
-
-            con.Close();
+            p.Id = Convert.ToDecimal(value);
+            sql.GetValues(p);
         }
 
         public void SetValues()
@@ -126,11 +106,7 @@ namespace PeopleDatabase.Forms
 
             if (result == DialogResult.Yes)
             {
-                string query = "DELETE FROM people WHERE Id=" + Id;
-                con.Open();
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.ExecuteNonQuery();
-                con.Close();
+                sql.Delete(p);
                 ClearLabels();
                 pictureBox1.Image = null;
             }
@@ -153,19 +129,16 @@ namespace PeopleDatabase.Forms
 
         private void btnCompleteUpdate_Click(object sender, EventArgs e)
         {
-            string query = "UPDATE people SET Name=@Name,MiddleName=@MiddleName,LastName=@LastName,PhoneNumber=@PhoneNumber,Weight=@Weight,Height=@Height,Address=@Address,Birthday=@Birthday WHERE Id=" + Id;
-            SqlCommand cmd = new SqlCommand(query,con);
-            cmd.Parameters.AddWithValue("@Name",Convert.ToString(txtBoxName.Text));
-            cmd.Parameters.AddWithValue("@MiddleName",Convert.ToString(txtBoxMiddleName.Text));
-            cmd.Parameters.AddWithValue("@LastName",Convert.ToString(txtBoxLastName.Text));
-            cmd.Parameters.AddWithValue("@PhoneNumber",Convert.ToString(txtBoxPhoneNumber.Text));
-            cmd.Parameters.AddWithValue("@Weight",Convert.ToInt32(txtBoxWeight.Text));
-            cmd.Parameters.AddWithValue("@Height",Convert.ToInt32(txtBoxHeight.Text));
-            cmd.Parameters.AddWithValue("@Address",Convert.ToString(txtBoxAddress.Text));
-            cmd.Parameters.AddWithValue("@Birthday",Convert.ToDateTime(dtpBirthday.Value));
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
+            p.Name = txtBoxName.Text;
+            p.MiddleName = txtBoxMiddleName.Text;
+            p.LastName = txtBoxLastName.Text;
+            p.Address = txtBoxAddress.Text;
+            p.Weight = Convert.ToInt32(txtBoxWeight.Text);
+            p.Height = Convert.ToInt32(txtBoxHeight.Text);
+            p.Address = txtBoxAddress.Text;
+            p.Birthday = dtpBirthday.Value;
+            p.PhoneNumber = txtBoxPhoneNumber.Text;
+            sql.Update(p);
             GetValues();
             SetValues();
             HideTextBox();

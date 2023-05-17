@@ -15,8 +15,8 @@ namespace PeopleDatabase.Forms
 {
     public partial class FormAdd : Form
     {
-        string connectionString;
-        SqlConnection con = new SqlConnection();
+        People people = new People();
+        SqlHelper sql = new SqlHelper();
         string filepath = "";
         bool checkPhoneNumber;
         public FormAdd()
@@ -71,54 +71,32 @@ namespace PeopleDatabase.Forms
             pbGetImage.Image = null;
         }
 
+        public void GetValues()
+        {
+            people.Id = Convert.ToDecimal(txtBoxId.Text);
+            people.Name = txtBoxName.Text;
+            people.MiddleName = txtBoxMiddleName.Text;
+            people.LastName = txtBoxSurname.Text;
+            people.Birthday = dtpBirthday.Value;
+            people.PhoneNumber = txtBoxPhoneNumber.Text;
+            people.Address = txtBoxAddress.Text;
+            people.Weight = Convert.ToInt32(txtBoxWeight.Text);
+            people.Height = Convert.ToInt32(txtBoxHeight.Text);
+
+            if (pbGetImage.Image != null)
+            {
+                people.Photo = ConvertImageToBytes(pbGetImage.Image);
+            }
+        }
+
         private void btnAddRecord_Click(object sender, EventArgs e)
         {
-            
-            connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
-            con.ConnectionString = connectionString;
-            con.Open();
-            string query = "INSERT INTO people (Id, Name, MiddleName,LastName,Birthday,PhoneNumber,Address,Photo,Weight,Height)";
-            query += " VALUES (@Id, @Name, @MiddleName, @LastName, @Birthday, @PhoneNumber, @Address, @Photo, @Weight, @Height)";
-
-            SqlCommand cmd = new SqlCommand(query, con);
-
             try
             {
-                People people = new People();
-                people.Id = Convert.ToDecimal(txtBoxId.Text);
-                people.Name = txtBoxName.Text;
-                people.MiddleName = txtBoxMiddleName.Text;
-                people.LastName = txtBoxSurname.Text;
-                people.Birthday = dtpBirthday.Value;
-                people.PhoneNumber = txtBoxPhoneNumber.Text;
-                people.Address = txtBoxAddress.Text;
-                people.Weight = Convert.ToInt32(txtBoxWeight.Text);
-                people.Height = Convert.ToInt32(txtBoxHeight.Text);
-
-                if (pbGetImage.Image != null)
-                {
-                    people.Photo = ConvertImageToBytes(pbGetImage.Image);
-                }
-
-                //MessageBox.Show("Id: " + people.Id + "\nName: " + people.Name + "\nMiddleName: " + people.MiddleName + "\nLastName: " + people.LastName + "\nAge: " + people.Age + "\nPhoneNumber: " + people.PhoneNumber + "\nAddress: " + people.Address + "\nWeight: " + people.Weight + "\nHeight: " + people.Height + "\nImage: " + people.Photo, "İşlem");
-                
-                cmd.Parameters.AddWithValue("Id", people.Id);
-                cmd.Parameters.AddWithValue("Name", people.Name);
-                cmd.Parameters.AddWithValue("MiddleName", people.MiddleName);
-                cmd.Parameters.AddWithValue("LastName", people.LastName);
-                cmd.Parameters.AddWithValue("Birthday", people.Birthday);
-                cmd.Parameters.AddWithValue("PhoneNumber", people.PhoneNumber);
-                cmd.Parameters.AddWithValue("Address", people.Address);
-                cmd.Parameters.AddWithValue("Photo", people.Photo);
-                cmd.Parameters.AddWithValue("Weight", people.Weight);
-                cmd.Parameters.AddWithValue("Height", people.Height);
-
+                GetValues();
                 DialogResult res = MessageBox.Show("Id: " + people.Id + "\nName: " + people.Name + "\nMiddleName: " + people.MiddleName + "\nLastName: " + people.LastName + "\nAge: " + people.Birthday + "\nPhoneNumber: " + people.PhoneNumber + "\nAddress: " + people.Address + "\nWeight: " + people.Weight + "\nHeight: " + people.Height + "\nImage: " + people.Photo + "\n\nEklemek istediğinize emin misiniz?", "Emin misiniz?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-
                 if(res == DialogResult.OK)
-                    cmd.ExecuteNonQuery();
-                
-                con.Close();
+                    sql.Create(people);
                 
             }
             catch (Exception ex)
@@ -130,9 +108,7 @@ namespace PeopleDatabase.Forms
                 {
                     MessageBox.Show("" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-
-            con.Close();  
+            } 
         }
 
         byte[] ConvertImageToBytes(Image img)
@@ -143,15 +119,6 @@ namespace PeopleDatabase.Forms
                 return ms.ToArray();
             }
         }
-
-        public Image ConvertByteArrayToImage(byte[] data)
-        {
-            using (MemoryStream ms = new MemoryStream(data)) 
-            {
-                return Image.FromStream(ms);
-            }
-        }
-
         private void FormAdd_Load(object sender, EventArgs e)
         {
             
@@ -187,6 +154,26 @@ namespace PeopleDatabase.Forms
                     txtBoxPhoneNumber.SelectionStart = txtBoxPhoneNumber.Text.Length;
                 txtBoxPhoneNumber.SelectionLength = 0;
             }
+        }
+
+        private void txtBoxId_Click(object sender, EventArgs e)
+        {
+            txtBoxId.SelectionStart = 0;
+        }
+
+        private void txtBoxPhoneNumber_Click(object sender, EventArgs e)
+        {
+            txtBoxPhoneNumber.SelectionStart = 0;
+        }
+
+        private void txtBoxWeight_Click(object sender, EventArgs e)
+        {
+            txtBoxWeight.SelectionStart = 0;
+        }
+
+        private void txtBoxHeight_Click(object sender, EventArgs e)
+        {
+            txtBoxHeight.SelectionStart = 0;
         }
     }
 }

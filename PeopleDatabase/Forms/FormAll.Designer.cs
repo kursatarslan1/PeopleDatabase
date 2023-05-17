@@ -30,6 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.peopleBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.peopleDataSet3 = new PeopleDatabase.PeopleDataSet3();
+            this.peopleTableAdapter = new PeopleDatabase.PeopleDataSet3TableAdapters.peopleTableAdapter();
             this.ıdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.middleNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -40,9 +43,6 @@
             this.phoneNumberDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.weightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.heightDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.peopleBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.peopleDataSet3 = new PeopleDatabase.PeopleDataSet3();
-            this.peopleTableAdapter = new PeopleDatabase.PeopleDataSet3TableAdapters.peopleTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.peopleBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.peopleDataSet3)).BeginInit();
@@ -66,13 +66,27 @@
             this.dataGridView1.DataSource = this.peopleBindingSource;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Top;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(1381, 566);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
+            // 
+            // peopleBindingSource
+            // 
+            this.peopleBindingSource.DataMember = "people";
+            this.peopleBindingSource.DataSource = this.peopleDataSet3;
+            // 
+            // peopleDataSet3
+            // 
+            this.peopleDataSet3.DataSetName = "PeopleDataSet3";
+            this.peopleDataSet3.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // peopleTableAdapter
+            // 
+            this.peopleTableAdapter.ClearBeforeFill = true;
             // 
             // ıdDataGridViewTextBoxColumn
             // 
@@ -154,20 +168,6 @@
             this.heightDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.heightDataGridViewTextBoxColumn.Name = "heightDataGridViewTextBoxColumn";
             this.heightDataGridViewTextBoxColumn.Width = 125;
-            // 
-            // peopleBindingSource
-            // 
-            this.peopleBindingSource.DataMember = "people";
-            this.peopleBindingSource.DataSource = this.peopleDataSet3;
-            // 
-            // peopleDataSet3
-            // 
-            this.peopleDataSet3.DataSetName = "PeopleDataSet3";
-            this.peopleDataSet3.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // peopleTableAdapter
-            // 
-            this.peopleTableAdapter.ClearBeforeFill = true;
             // 
             // FormAll
             // 

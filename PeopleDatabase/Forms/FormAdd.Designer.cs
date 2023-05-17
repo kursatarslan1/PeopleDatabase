@@ -33,23 +33,23 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtBoxSurname = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.txtBoxId = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtBoxMiddleName = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtBoxAddress = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtBoxPhoneNumber = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.txtBoxWeight = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtBoxHeight = new System.Windows.Forms.TextBox();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.pbGetImage = new System.Windows.Forms.PictureBox();
             this.btnAddRecord = new System.Windows.Forms.Button();
             this.btnCleanFields = new System.Windows.Forms.Button();
             this.dtpBirthday = new System.Windows.Forms.DateTimePicker();
+            this.txtBoxPhoneNumber = new System.Windows.Forms.MaskedTextBox();
+            this.txtBoxId = new System.Windows.Forms.MaskedTextBox();
+            this.txtBoxWeight = new System.Windows.Forms.MaskedTextBox();
+            this.txtBoxHeight = new System.Windows.Forms.MaskedTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbGetImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,14 +95,6 @@
             this.label3.Size = new System.Drawing.Size(24, 16);
             this.label3.TabIndex = 6;
             this.label3.Text = "Id :";
-            // 
-            // txtBoxId
-            // 
-            this.txtBoxId.Location = new System.Drawing.Point(477, 91);
-            this.txtBoxId.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtBoxId.Name = "txtBoxId";
-            this.txtBoxId.Size = new System.Drawing.Size(193, 22);
-            this.txtBoxId.TabIndex = 1;
             // 
             // label4
             // 
@@ -157,15 +149,6 @@
             this.label7.TabIndex = 14;
             this.label7.Text = "Phone Number :";
             // 
-            // txtBoxPhoneNumber
-            // 
-            this.txtBoxPhoneNumber.Location = new System.Drawing.Point(853, 139);
-            this.txtBoxPhoneNumber.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtBoxPhoneNumber.Name = "txtBoxPhoneNumber";
-            this.txtBoxPhoneNumber.Size = new System.Drawing.Size(243, 22);
-            this.txtBoxPhoneNumber.TabIndex = 6;
-            this.txtBoxPhoneNumber.TextChanged += new System.EventHandler(this.txtBoxPhoneNumber_TextChanged);
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -175,14 +158,6 @@
             this.label8.TabIndex = 16;
             this.label8.Text = "Weight :";
             // 
-            // txtBoxWeight
-            // 
-            this.txtBoxWeight.Location = new System.Drawing.Point(853, 194);
-            this.txtBoxWeight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtBoxWeight.Name = "txtBoxWeight";
-            this.txtBoxWeight.Size = new System.Drawing.Size(243, 22);
-            this.txtBoxWeight.TabIndex = 7;
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -191,14 +166,6 @@
             this.label9.Size = new System.Drawing.Size(52, 16);
             this.label9.TabIndex = 18;
             this.label9.Text = "Height :";
-            // 
-            // txtBoxHeight
-            // 
-            this.txtBoxHeight.Location = new System.Drawing.Point(853, 240);
-            this.txtBoxHeight.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txtBoxHeight.Name = "txtBoxHeight";
-            this.txtBoxHeight.Size = new System.Drawing.Size(243, 22);
-            this.txtBoxHeight.TabIndex = 8;
             // 
             // openFileDialog1
             // 
@@ -242,33 +209,72 @@
             // dtpBirthday
             // 
             this.dtpBirthday.Location = new System.Drawing.Point(853, 91);
-            this.dtpBirthday.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtpBirthday.Margin = new System.Windows.Forms.Padding(4);
             this.dtpBirthday.Name = "dtpBirthday";
             this.dtpBirthday.Size = new System.Drawing.Size(243, 22);
             this.dtpBirthday.TabIndex = 21;
+            // 
+            // txtBoxPhoneNumber
+            // 
+            this.txtBoxPhoneNumber.Location = new System.Drawing.Point(853, 145);
+            this.txtBoxPhoneNumber.Mask = "(999) 000-00-00";
+            this.txtBoxPhoneNumber.Name = "txtBoxPhoneNumber";
+            this.txtBoxPhoneNumber.Size = new System.Drawing.Size(243, 22);
+            this.txtBoxPhoneNumber.TabIndex = 22;
+            this.txtBoxPhoneNumber.Click += new System.EventHandler(this.txtBoxPhoneNumber_Click);
+            // 
+            // txtBoxId
+            // 
+            this.txtBoxId.Location = new System.Drawing.Point(477, 97);
+            this.txtBoxId.Mask = "00000000000";
+            this.txtBoxId.Name = "txtBoxId";
+            this.txtBoxId.Size = new System.Drawing.Size(193, 22);
+            this.txtBoxId.TabIndex = 23;
+            this.txtBoxId.ValidatingType = typeof(int);
+            this.txtBoxId.Click += new System.EventHandler(this.txtBoxId_Click);
+            // 
+            // txtBoxWeight
+            // 
+            this.txtBoxWeight.Location = new System.Drawing.Point(853, 194);
+            this.txtBoxWeight.Mask = "000";
+            this.txtBoxWeight.Name = "txtBoxWeight";
+            this.txtBoxWeight.Size = new System.Drawing.Size(243, 22);
+            this.txtBoxWeight.TabIndex = 24;
+            this.txtBoxWeight.ValidatingType = typeof(int);
+            this.txtBoxWeight.Click += new System.EventHandler(this.txtBoxWeight_Click);
+            // 
+            // txtBoxHeight
+            // 
+            this.txtBoxHeight.Location = new System.Drawing.Point(853, 242);
+            this.txtBoxHeight.Mask = "000";
+            this.txtBoxHeight.Name = "txtBoxHeight";
+            this.txtBoxHeight.Size = new System.Drawing.Size(243, 22);
+            this.txtBoxHeight.TabIndex = 25;
+            this.txtBoxHeight.ValidatingType = typeof(int);
+            this.txtBoxHeight.Click += new System.EventHandler(this.txtBoxHeight_Click);
             // 
             // FormAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1261, 703);
+            this.Controls.Add(this.txtBoxHeight);
+            this.Controls.Add(this.txtBoxWeight);
+            this.Controls.Add(this.txtBoxId);
+            this.Controls.Add(this.txtBoxPhoneNumber);
             this.Controls.Add(this.dtpBirthday);
             this.Controls.Add(this.btnCleanFields);
             this.Controls.Add(this.btnAddRecord);
             this.Controls.Add(this.pbGetImage);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.txtBoxHeight);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.txtBoxWeight);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.txtBoxPhoneNumber);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txtBoxAddress);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.txtBoxMiddleName);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.txtBoxId);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.txtBoxSurname);
             this.Controls.Add(this.label1);
@@ -289,22 +295,22 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtBoxSurname;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txtBoxId;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtBoxMiddleName;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtBoxAddress;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox txtBoxPhoneNumber;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txtBoxWeight;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtBoxHeight;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.PictureBox pbGetImage;
         private System.Windows.Forms.Button btnAddRecord;
         private System.Windows.Forms.Button btnCleanFields;
         private System.Windows.Forms.DateTimePicker dtpBirthday;
+        private System.Windows.Forms.MaskedTextBox txtBoxPhoneNumber;
+        private System.Windows.Forms.MaskedTextBox txtBoxId;
+        private System.Windows.Forms.MaskedTextBox txtBoxWeight;
+        private System.Windows.Forms.MaskedTextBox txtBoxHeight;
     }
 }
