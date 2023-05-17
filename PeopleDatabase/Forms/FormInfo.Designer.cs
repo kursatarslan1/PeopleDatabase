@@ -54,9 +54,10 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Location = new System.Drawing.Point(55, 56);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(408, 353);
+            this.pictureBox1.Size = new System.Drawing.Size(448, 411);
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -232,7 +233,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1350, 546);
+            this.ClientSize = new System.Drawing.Size(1305, 551);
             this.Controls.Add(this.btnCompleteUpdate);
             this.Controls.Add(this.txtBoxAddress);
             this.Controls.Add(this.dtpBirthday);
@@ -254,8 +255,9 @@
             this.Controls.Add(this.lblName);
             this.Controls.Add(this.lblId);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "FormInfo";
-            this.Text = "FormInfo";
+            this.Text = "Information";
             this.Load += new System.EventHandler(this.FormInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

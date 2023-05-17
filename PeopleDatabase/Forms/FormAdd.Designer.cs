@@ -212,7 +212,7 @@
             this.dtpBirthday.Margin = new System.Windows.Forms.Padding(4);
             this.dtpBirthday.Name = "dtpBirthday";
             this.dtpBirthday.Size = new System.Drawing.Size(243, 22);
-            this.dtpBirthday.TabIndex = 21;
+            this.dtpBirthday.TabIndex = 8;
             // 
             // txtBoxPhoneNumber
             // 
@@ -220,7 +220,7 @@
             this.txtBoxPhoneNumber.Mask = "(999) 000-00-00";
             this.txtBoxPhoneNumber.Name = "txtBoxPhoneNumber";
             this.txtBoxPhoneNumber.Size = new System.Drawing.Size(243, 22);
-            this.txtBoxPhoneNumber.TabIndex = 22;
+            this.txtBoxPhoneNumber.TabIndex = 5;
             this.txtBoxPhoneNumber.Click += new System.EventHandler(this.txtBoxPhoneNumber_Click);
             // 
             // txtBoxId
@@ -229,7 +229,7 @@
             this.txtBoxId.Mask = "00000000000";
             this.txtBoxId.Name = "txtBoxId";
             this.txtBoxId.Size = new System.Drawing.Size(193, 22);
-            this.txtBoxId.TabIndex = 23;
+            this.txtBoxId.TabIndex = 1;
             this.txtBoxId.ValidatingType = typeof(int);
             this.txtBoxId.Click += new System.EventHandler(this.txtBoxId_Click);
             // 
@@ -239,7 +239,7 @@
             this.txtBoxWeight.Mask = "000";
             this.txtBoxWeight.Name = "txtBoxWeight";
             this.txtBoxWeight.Size = new System.Drawing.Size(243, 22);
-            this.txtBoxWeight.TabIndex = 24;
+            this.txtBoxWeight.TabIndex = 6;
             this.txtBoxWeight.ValidatingType = typeof(int);
             this.txtBoxWeight.Click += new System.EventHandler(this.txtBoxWeight_Click);
             // 
@@ -249,7 +249,7 @@
             this.txtBoxHeight.Mask = "000";
             this.txtBoxHeight.Name = "txtBoxHeight";
             this.txtBoxHeight.Size = new System.Drawing.Size(243, 22);
-            this.txtBoxHeight.TabIndex = 25;
+            this.txtBoxHeight.TabIndex = 7;
             this.txtBoxHeight.ValidatingType = typeof(int);
             this.txtBoxHeight.Click += new System.EventHandler(this.txtBoxHeight_Click);
             // 
@@ -257,7 +257,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1261, 703);
+            this.ClientSize = new System.Drawing.Size(1261, 569);
             this.Controls.Add(this.txtBoxHeight);
             this.Controls.Add(this.txtBoxWeight);
             this.Controls.Add(this.txtBoxId);

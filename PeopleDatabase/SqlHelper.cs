@@ -12,7 +12,7 @@ namespace PeopleDatabase
 {
     internal class SqlHelper
     {
-        readonly string connectionString;
+        string connectionString;
         readonly SqlConnection con = new SqlConnection();
         public SqlHelper() 
         {
@@ -35,7 +35,21 @@ namespace PeopleDatabase
             cmd.Parameters.AddWithValue("Weight", people.Weight);
             cmd.Parameters.AddWithValue("Height", people.Height);
             con.Open();
-            cmd.ExecuteNonQuery();
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) 
+            {
+                string error = ex.Message;
+                if (error.Contains("PRIMARY KEY"))
+                    MessageBox.Show("Already Exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                else
+                {
+                    MessageBox.Show("" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                con.Close(); 
+            }
             con.Close();
         }
 
@@ -52,7 +66,15 @@ namespace PeopleDatabase
             cmd.Parameters.AddWithValue("@Address", Convert.ToString(people.Address));
             cmd.Parameters.AddWithValue("@Birthday", Convert.ToDateTime(people.Birthday));
             con.Open();
-            cmd.ExecuteNonQuery();
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                con.Close();
+            }
             con.Close();
         }
 
@@ -61,7 +83,15 @@ namespace PeopleDatabase
             string deleteQuery = "DELETE FROM people WHERE Id=" + people.Id;
             SqlCommand cmd = new SqlCommand(deleteQuery, con);
             con.Open();
-            cmd.ExecuteNonQuery();
+            try
+            {
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                con.Close();
+            }
             con.Close();
         }
 
@@ -88,6 +118,8 @@ namespace PeopleDatabase
 
         public DataTable LoadData()
         {
+            connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
+            con.ConnectionString = connectionString;
             string allDataQuery = "SELECT * FROM people";
             using (con)
             {
@@ -99,6 +131,22 @@ namespace PeopleDatabase
                     con.Close();
                     return dt;
                 }
+            }
+        }
+
+        public DataTable Filter(string value)
+        {
+            connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
+            con.ConnectionString = connectionString;
+            string filterQuery = "SELECT * FROM people WHERE Id LIKE '%" + value + "%' OR Name LIKE '%" + value + "%' OR MiddleName LIKE '%"+value+"%' OR LastName LIKE '%" + value + "%' OR PhoneNumber LIKE '%" + value + "%' OR Weight LIKE '%" +value + "%' OR Height LIKE '%" + value + "%' OR Address LIKE '%" + value + "%'";
+            con.Open();
+
+            using (DataTable dt = new DataTable("people"))
+            {
+                SqlDataAdapter adptr = new SqlDataAdapter(filterQuery, con);
+                adptr.Fill(dt);
+                con.Close();
+                return dt;
             }
         }
     }

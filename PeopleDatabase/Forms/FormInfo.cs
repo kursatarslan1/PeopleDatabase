@@ -18,11 +18,6 @@ namespace PeopleDatabase.Forms
         readonly People p = new People();
         readonly SqlHelper sql = new SqlHelper();
         readonly string value;
-        public FormInfo()
-        {
-            InitializeComponent();
-        }
-
         public  FormInfo(string id)
         {
             InitializeComponent();
@@ -109,6 +104,7 @@ namespace PeopleDatabase.Forms
                 sql.Delete(p);
                 ClearLabels();
                 pictureBox1.Image = null;
+                pictureBox1.BackColor = Color.Gray;
             }
             
         }

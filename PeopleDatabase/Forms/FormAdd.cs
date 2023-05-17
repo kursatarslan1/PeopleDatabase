@@ -91,24 +91,10 @@ namespace PeopleDatabase.Forms
 
         private void btnAddRecord_Click(object sender, EventArgs e)
         {
-            try
-            {
-                GetValues();
-                DialogResult res = MessageBox.Show("Id: " + people.Id + "\nName: " + people.Name + "\nMiddleName: " + people.MiddleName + "\nLastName: " + people.LastName + "\nAge: " + people.Birthday + "\nPhoneNumber: " + people.PhoneNumber + "\nAddress: " + people.Address + "\nWeight: " + people.Weight + "\nHeight: " + people.Height + "\nImage: " + people.Photo + "\n\nEklemek istediğinize emin misiniz?", "Emin misiniz?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if(res == DialogResult.OK)
-                    sql.Create(people);
-                
-            }
-            catch (Exception ex)
-            {
-                string error = ex.Message;
-                if (error.Contains("PRIMARY KEY"))
-                    MessageBox.Show("Already Exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
-                else
-                {
-                    MessageBox.Show("" + ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            } 
+            GetValues();
+            DialogResult res = MessageBox.Show("Id: " + people.Id + "\nName: " + people.Name + "\nMiddleName: " + people.MiddleName + "\nLastName: " + people.LastName + "\nAge: " + people.Birthday + "\nPhoneNumber: " + people.PhoneNumber + "\nAddress: " + people.Address + "\nWeight: " + people.Weight + "\nHeight: " + people.Height + "\nImage: " + people.Photo + "\n\nEklemek istediğinize emin misiniz?", "Emin misiniz?", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (res == DialogResult.OK)
+                sql.Create(people);
         }
 
         byte[] ConvertImageToBytes(Image img)
@@ -157,7 +143,7 @@ namespace PeopleDatabase.Forms
         }
 
         private void txtBoxId_Click(object sender, EventArgs e)
-        {
+       {
             txtBoxId.SelectionStart = 0;
         }
 

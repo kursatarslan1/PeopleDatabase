@@ -29,8 +29,19 @@ namespace PeopleDatabase.Forms
 
         private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            FormInfo frm = new FormInfo(dataGridView1.SelectedCells[0].Value.ToString());
+            FormInfo frm = new FormInfo(dataGridView1.SelectedCells[1].Value.ToString());
             frm.Show();
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = sql.LoadData();
+        }
+
+        private void txtBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = sql.Filter(txtBoxSearch.Text);
+
         }
     }
 }
