@@ -93,6 +93,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>PeopleDataSet3.xsd</DependentUpon>
     </Compile>
+    <Compile Include="PeopleLogDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PeopleLogDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlHelper.cs" />
@@ -127,6 +132,17 @@
     </None>
     <None Include="PeopleDataSet3.xss">
       <DependentUpon>PeopleDataSet3.xsd</DependentUpon>
+    </None>
+    <None Include="PeopleLogDataSet.xsc">
+      <DependentUpon>PeopleLogDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="PeopleLogDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PeopleLogDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PeopleLogDataSet.xss">
+      <DependentUpon>PeopleLogDataSet.xsd</DependentUpon>
     </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

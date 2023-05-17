@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,15 +16,30 @@ namespace PeopleDatabase
     {
         string connectionString;
         readonly SqlConnection con = new SqlConnection();
+        DateTime dateTime = DateTime.UtcNow.Date;
         public SqlHelper() 
         {
             connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
             con.ConnectionString = connectionString; 
         }
 
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
+
         public void Create(People people)
         {
             string createQuery = "INSERT INTO people (Id, Name, MiddleName,LastName,Birthday,PhoneNumber,Address,Photo,Weight,Height) VALUES (@Id, @Name, @MiddleName, @LastName, @Birthday, @PhoneNumber, @Address, @Photo, @Weight, @Height)";
+            string logQuery = "INSERT INTO log (IpAddress, Process, ChangeDate, Change) VALUES (@IpAddress, @Process, @ChangeDate, @Change)";
             SqlCommand cmd = new SqlCommand(createQuery, con);
             cmd.Parameters.AddWithValue("Id", people.Id);
             cmd.Parameters.AddWithValue("Name", people.Name);
@@ -38,6 +55,12 @@ namespace PeopleDatabase
             try
             {
                 cmd.ExecuteNonQuery();
+                SqlCommand cmnd = new SqlCommand(logQuery, con);
+                cmnd.Parameters.AddWithValue("IpAddress", GetLocalIPAddress());
+                cmnd.Parameters.AddWithValue("Process", "Create");
+                cmnd.Parameters.AddWithValue("ChangeDate", dateTime);
+                cmnd.Parameters.AddWithValue("Change", people.Id);
+                cmnd.ExecuteNonQuery();
             }
             catch (Exception ex) 
             {
@@ -116,21 +139,37 @@ namespace PeopleDatabase
             con.Close();
         }
 
-        public DataTable LoadData()
+        public DataTable LoadData(int checkA)
         {
             connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
             con.ConnectionString = connectionString;
             string allDataQuery = "SELECT * FROM people";
+            string logDataQuery = "SELECT * FROM log";
             using (con)
             {
-                con.Open();
-                using (DataTable dt = new DataTable("people"))
+                if (checkA == 0)
                 {
-                    SqlDataAdapter adptr = new SqlDataAdapter(allDataQuery, con);
-                    adptr.Fill(dt);
-                    con.Close();
-                    return dt;
+                    con.Open();
+                    using (DataTable dt = new DataTable("people"))
+                    {
+                        SqlDataAdapter adptr = new SqlDataAdapter(allDataQuery, con);
+                        adptr.Fill(dt);
+                        con.Close();
+                        return dt;
+                    }
                 }
+                else
+                {
+                    con.Open();
+                    using (DataTable dt = new DataTable("log"))
+                    {
+                        SqlDataAdapter adptr = new SqlDataAdapter(logDataQuery, con);
+                        adptr.Fill(dt);
+                        con.Close();
+                        return dt;
+                    }
+                }
+                
             }
         }
 

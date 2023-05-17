@@ -21,7 +21,7 @@ namespace PeopleDatabase.Forms
 
         private void FormAll_Load(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = sql.LoadData();
+            dataGridView1.DataSource = sql.LoadData(0);
             dataGridView1.RowTemplate.Height = 235;
             dataGridView1.DefaultCellStyle.SelectionBackColor = dataGridView1.DefaultCellStyle.BackColor;
             dataGridView1.DefaultCellStyle.SelectionForeColor = dataGridView1.DefaultCellStyle.ForeColor;
@@ -35,7 +35,7 @@ namespace PeopleDatabase.Forms
 
         private void btnRefresh_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = sql.LoadData();
+            dataGridView1.DataSource = sql.LoadData(0);
         }
 
         private void txtBoxSearch_TextChanged(object sender, EventArgs e)

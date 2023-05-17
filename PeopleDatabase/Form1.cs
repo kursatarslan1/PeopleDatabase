@@ -17,6 +17,7 @@ namespace PeopleDatabase
     {
         private Button currentButton;
         private Form activeForm;
+        SqlHelper sql = new SqlHelper();
         public MainForm()
         {
             InitializeComponent();
@@ -106,6 +107,17 @@ namespace PeopleDatabase
             lblTitle.Text = "PEOPLE DATABASE";
             currentButton = null;
             btnCloseChildForm.Visible = false;
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+
+        }
+
+        private void btnGetLogs_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = sql.LoadData(1);
         }
     }
 }
