@@ -119,5 +119,10 @@ namespace PeopleDatabase
         {
             dataGridView1.DataSource = sql.LoadData(1);
         }
+
+        private void txtBoxSearch_TextChanged(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = sql.Filter(txtBoxSearch.Text, 1);
+        }
     }
 }

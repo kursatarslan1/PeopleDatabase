@@ -40,7 +40,7 @@ namespace PeopleDatabase.Forms
 
         private void txtBoxSearch_TextChanged(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = sql.Filter(txtBoxSearch.Text);
+            dataGridView1.DataSource = sql.Filter(txtBoxSearch.Text,0);
 
         }
     }

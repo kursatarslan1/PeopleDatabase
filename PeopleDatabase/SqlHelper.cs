@@ -17,10 +17,11 @@ namespace PeopleDatabase
         string connectionString;
         readonly SqlConnection con = new SqlConnection();
         DateTime dateTime = DateTime.UtcNow.Date;
+        string logQuery = "INSERT INTO log (IpAddress, Process, ChangeDate, Change) VALUES (@IpAddress, @Process, @ChangeDate, @Change)";
         public SqlHelper() 
         {
             connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
-            con.ConnectionString = connectionString; 
+            con.ConnectionString = connectionString;
         }
 
         public static string GetLocalIPAddress()
@@ -39,7 +40,6 @@ namespace PeopleDatabase
         public void Create(People people)
         {
             string createQuery = "INSERT INTO people (Id, Name, MiddleName,LastName,Birthday,PhoneNumber,Address,Photo,Weight,Height) VALUES (@Id, @Name, @MiddleName, @LastName, @Birthday, @PhoneNumber, @Address, @Photo, @Weight, @Height)";
-            string logQuery = "INSERT INTO log (IpAddress, Process, ChangeDate, Change) VALUES (@IpAddress, @Process, @ChangeDate, @Change)";
             SqlCommand cmd = new SqlCommand(createQuery, con);
             cmd.Parameters.AddWithValue("Id", people.Id);
             cmd.Parameters.AddWithValue("Name", people.Name);
@@ -92,6 +92,12 @@ namespace PeopleDatabase
             try
             {
                 cmd.ExecuteNonQuery();
+                SqlCommand cmnd = new SqlCommand(logQuery, con);
+                cmnd.Parameters.AddWithValue("IpAddress", GetLocalIPAddress());
+                cmnd.Parameters.AddWithValue("Process", "Update");
+                cmnd.Parameters.AddWithValue("ChangeDate", dateTime);
+                cmnd.Parameters.AddWithValue("Change", people.Id);
+                cmnd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
@@ -109,6 +115,12 @@ namespace PeopleDatabase
             try
             {
                 cmd.ExecuteNonQuery();
+                SqlCommand cmnd = new SqlCommand(logQuery, con);
+                cmnd.Parameters.AddWithValue("IpAddress", GetLocalIPAddress());
+                cmnd.Parameters.AddWithValue("Process", "Delete");
+                cmnd.Parameters.AddWithValue("ChangeDate", dateTime);
+                cmnd.Parameters.AddWithValue("Change", people.Id);
+                cmnd.ExecuteNonQuery();
             }
             catch (Exception ex)
             {
@@ -147,7 +159,7 @@ namespace PeopleDatabase
             string logDataQuery = "SELECT * FROM log";
             using (con)
             {
-                if (checkA == 0)
+                if (checkA == 0) 
                 {
                     con.Open();
                     using (DataTable dt = new DataTable("people"))
@@ -173,19 +185,36 @@ namespace PeopleDatabase
             }
         }
 
-        public DataTable Filter(string value)
+        public DataTable Filter(string value, int checkB)
         {
             connectionString = "data source=.;Initial Catalog=People;Integrated Security=True;";
             con.ConnectionString = connectionString;
-            string filterQuery = "SELECT * FROM people WHERE Id LIKE '%" + value + "%' OR Name LIKE '%" + value + "%' OR MiddleName LIKE '%"+value+"%' OR LastName LIKE '%" + value + "%' OR PhoneNumber LIKE '%" + value + "%' OR Weight LIKE '%" +value + "%' OR Height LIKE '%" + value + "%' OR Address LIKE '%" + value + "%'";
-            con.Open();
-
-            using (DataTable dt = new DataTable("people"))
+            if (checkB == 0)
             {
-                SqlDataAdapter adptr = new SqlDataAdapter(filterQuery, con);
-                adptr.Fill(dt);
-                con.Close();
-                return dt;
+                string filterQuery = "SELECT * FROM people WHERE Id LIKE '%" + value + "%' OR Name LIKE '%" + value + "%' OR MiddleName LIKE '%" + value + "%' OR LastName LIKE '%" + value + "%' OR PhoneNumber LIKE '%" + value + "%' OR Weight LIKE '%" + value + "%' OR Height LIKE '%" + value + "%' OR Address LIKE '%" + value + "%'";
+                con.Open();
+
+                using (DataTable dt = new DataTable("people"))
+                {
+                    SqlDataAdapter adptr = new SqlDataAdapter(filterQuery, con);
+                    adptr.Fill(dt);
+                    con.Close();
+                    return dt;
+                }
+            }
+            else
+            {
+                string filterQuery = "SELECT * FROM log WHERE IpAddress LIKE '%" + value + "%' OR Process LIKE '%" + value + "%' OR ChangeDate LIKE '%" + value + "%' OR Change LIKE '%" + value + "%'";
+                con.Open();
+
+                using (DataTable dt = new DataTable("people"))
+                {
+                    SqlDataAdapter adptr = new SqlDataAdapter(filterQuery, con);
+                    adptr.Fill(dt);
+                    con.Close();
+                    return dt;
+                }
+
             }
         }
     }
